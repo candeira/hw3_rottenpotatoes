@@ -6,7 +6,7 @@
   = hidden_field_tag ":release_date_sort", true if @date_header
   Include: 
   - @all_ratings.each do |rating|
-    = rating
+    %label{:for => "ratings_#{rating}"}= rating
     = check_box_tag "ratings[#{rating}]", 1, @selected_ratings.include?(rating)
   = submit_tag 'Refresh', :id => 'ratings_submit'
 
