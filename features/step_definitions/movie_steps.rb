@@ -49,3 +49,16 @@ And /I should not see the following movies/ do |movies_table|
     assert_no_match(regex, page.body)
   end
 end
+
+Then /I should see (all|none) of the movies/ do |allornone|
+  movies = Movie.all
+  row = /<tr/
+  rows = page.body.split("\n")
+  rows = rows.select { |line| line =~ /<tr/ }
+  rows = rows.reject { |line| line =~ /<thead/ }
+  if allornone == "all"
+    assert movies.count == rows.count
+  elsif allornone == "none"
+    assert rows.count == 0
+  end
+end
